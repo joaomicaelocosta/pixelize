@@ -1,0 +1,14 @@
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.pixel {
+  width: 20px; /* You can adjust this based on your preference */
+  height: 20px;
+  border: 1px solid #ddd;
+}

@@ -1,0 +1,18 @@
+<div class="canvas-container">
+  <button (click)="resetCanvas()">Reset Canvas</button>
+
+  <!-- Dropdown to select grid size -->
+  <select [(ngModel)]="gridSize" (change)="changeGridSize()">
+    <option [value]="16">16x16</option>
+    <option [value]="32">32x32</option>
+    <option [value]="64">64x64</option>
+  </select>
+
+  <canvas
+    #myCanvas
+    (mousedown)="startDrawing($event)"
+    (mousemove)="draw($event)"
+    (mouseup)="stopDrawing()"
+    (mouseleave)="stopDrawing()"
+  ></canvas>
+</div>
