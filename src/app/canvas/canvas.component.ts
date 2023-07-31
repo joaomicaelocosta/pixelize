@@ -136,4 +136,47 @@ export class CanvasComponent implements AfterViewInit {
     // Redraw the initial grid
     this.drawInitialGrid();
   }
+
+  saveDrawing() {
+    let saveSlot: string | null = null;
+    for (let i = 1; i <= 5; i++) {
+      if (!localStorage.getItem(`savedDrawing${i}`)) {
+        saveSlot = `savedDrawing${i}`;
+        break;
+      }
+    }
+
+    if (!saveSlot) {
+      // If no empty slot, overwrite the first one (or adapt to your preference)
+      if (confirm('All save slots are occupied. Overwrite the first save?')) {
+        saveSlot = 'savedDrawing1';
+      } else {
+        return; // Do not save if the user cancels
+      }
+    }
+
+    let imgData = this.context.getImageData(
+      0,
+      0,
+      this.canvasWidth,
+      this.canvasHeight
+    );
+    const dataArr = Array.from(imgData.data);
+    localStorage.setItem(
+      `${saveSlot}`,
+      JSON.stringify({
+        data: dataArr,
+        width: imgData.width,
+        height: imgData.height,
+      })
+    );
+  }
+
+  clearSavedDrawing() {
+    localStorage.removeItem('savedDrawing');
+  }
+  onDrawingSelected(selectedImageData: ImageData) {
+    // Load the drawing onto the main canvas
+    this.context.putImageData(selectedImageData, 0, 0);
+  }
 }

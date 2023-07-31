@@ -1,5 +1,10 @@
 <div class="canvas-container">
   <button (click)="resetCanvas()">Reset Canvas</button>
+  <button (click)="saveDrawing()">Save Drawing</button>
+  <button (click)="clearSavedDrawing()">Clear Saved Drawing</button>
+  <app-saved-drawings
+    (drawingSelected)="onDrawingSelected($event)"
+  ></app-saved-drawings>
 
   <!-- Dropdown to select grid size -->
   <select [(ngModel)]="gridSize" (change)="changeGridSize()">

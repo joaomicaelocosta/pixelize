@@ -18,11 +18,9 @@ export class ColorPickerComponent {
 
   // Whenever color changes, emit the new color value
   colorChange() {
-    console.log('New color selected: ', this.selectedColor);
     this.colorSelected.emit(this.selectedColor);
   }
   colorChanged(newColor: string) {
-    console.log('Color updated through colorPickerChange:', newColor);
     this.selectedColor = newColor;
     this.colorChange();
 

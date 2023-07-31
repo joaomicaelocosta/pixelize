@@ -1,0 +1,14 @@
+<div class="saved-drawings-container">
+  <div
+    class="saved-drawings"
+    *ngFor="let drawing of savedDrawings; let i = index"
+  >
+    <canvas
+      class="canvas"
+      #savedCanvas
+      [width]="drawingWidth"
+      [height]="drawingHeight"
+      (click)="loadDrawing(i)"
+    ></canvas>
+  </div>
+</div>

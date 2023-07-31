@@ -1,0 +1,16 @@
+.saved-drawings-container {
+  display: flex;
+  gap: 10px;
+}
+
+.saved-drawing {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.canvas {
+  width: 80px;
+  height: 80px;
+}
