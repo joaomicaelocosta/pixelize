@@ -52,3 +52,8 @@ select {
   text-align: left;
   border: solid 2px #333;
 }
+@media only screen and (max-width: 767px) {
+  .button-container {
+    margin-top: calc(2rem + 40px);
+  }
+}
