@@ -30,11 +30,11 @@ export class SavedDrawingsComponent implements OnInit {
   }
 
   loadSavedDrawings() {
+    this.savedDrawings = [];
     for (let i = 1; i <= 5; i++) {
       const savedDrawingStr = localStorage.getItem(`savedDrawing${i}`);
       if (savedDrawingStr) {
         const savedDrawingData = JSON.parse(savedDrawingStr);
-        console.log('saved drawings', savedDrawingData.data);
         let imgData = new ImageData(
           new Uint8ClampedArray(savedDrawingData.data),
           savedDrawingData.width,
@@ -43,7 +43,9 @@ export class SavedDrawingsComponent implements OnInit {
         this.savedDrawings.push(imgData);
       }
     }
-    console.log('saved drawings', this.savedDrawings);
+    setTimeout(() => {
+      this.renderSavedDrawings();
+    }, 100);
   }
 
   renderSavedDrawings() {
@@ -55,5 +57,9 @@ export class SavedDrawingsComponent implements OnInit {
   }
   loadDrawing(index: number) {
     this.drawingSelected.emit(this.savedDrawings[index]);
+  }
+
+  update() {
+    this.loadSavedDrawings();
   }
 }

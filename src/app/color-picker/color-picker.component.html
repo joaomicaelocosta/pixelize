@@ -1,6 +1,4 @@
 <div class="picker-container">
-  <h2>Color Picker</h2>
-
   <!-- Input field with the color picker directive -->
   <input
     [colorPicker]="selectedColor"
@@ -11,16 +9,11 @@
 
   <!-- Display for the selected color (Optional as you also have the input field) -->
   <div class="selected-color" [style.background-color]="selectedColor"></div>
-  <button (click)="activateEraser()">Eraser</button>
-
-  <!-- Color history display -->
-  <!-- <div class="color-history">
-    <h3>Recent Colors</h3>
-    <div
-      *ngFor="let color of colorHistory"
-      [style.background-color]="color"
-      class="color-history-item"
-      (click)="selectFromHistory(color)"
-    ></div>
-  </div> -->
+  <button
+    (click)="activateEraser()"
+    title="Eraser"
+    [ngClass]="{ active: isEraserActive }"
+  >
+    <i class="fa fa-eraser" aria-hidden="true"></i>
+  </button>
 </div>

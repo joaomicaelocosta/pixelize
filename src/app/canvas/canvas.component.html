@@ -1,23 +1,37 @@
 <div class="canvas-container">
-  <button (click)="resetCanvas()">Reset Canvas</button>
-  <button (click)="saveDrawing()">Save Drawing</button>
-  <button (click)="clearSavedDrawing()">Clear Saved Drawing</button>
-  <app-saved-drawings
-    (drawingSelected)="onDrawingSelected($event)"
-  ></app-saved-drawings>
-
-  <!-- Dropdown to select grid size -->
-  <select [(ngModel)]="gridSize" (change)="changeGridSize()">
-    <option [value]="16">16x16</option>
-    <option [value]="32">32x32</option>
-    <option [value]="64">64x64</option>
-  </select>
-
   <canvas
+    class="canvas"
     #myCanvas
     (mousedown)="startDrawing($event)"
     (mousemove)="draw($event)"
     (mouseup)="stopDrawing()"
     (mouseleave)="stopDrawing()"
   ></canvas>
+
+  <div class="button-container">
+    <button (click)="resetCanvas()" title="Reset Canvas">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+    <button (click)="saveDrawing()" title="Save Drawing">
+      <i class="fa fa-save" aria-hidden="true"></i>
+    </button>
+    <button (click)="downloadDrawing()" title="Download as PNG">
+      <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+    <button (click)="clearSavedDrawing()" title="Clear Saved Drawing">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
+
+    <select [(ngModel)]="gridSize" (change)="changeGridSize()">
+      <option [value]="16">16x16</option>
+      <option [value]="32">32x32</option>
+      <option [value]="64">64x64</option>
+    </select>
+  </div>
+  <app-saved-drawings
+    #savedDrawingsComponent
+    (drawingSelected)="onDrawingSelected($event)"
+  ></app-saved-drawings>
+
+  <!-- Dropdown to select grid size -->
 </div>

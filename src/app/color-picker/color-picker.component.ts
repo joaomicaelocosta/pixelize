@@ -12,8 +12,10 @@ export class ColorPickerComponent {
   isEraserActive = false;
 
   activateEraser() {
-    this.isEraserActive = true;
-    this.colorSelected.emit('eraser'); // Emit a special value for eraser mode
+    this.isEraserActive = !this.isEraserActive; // This will toggle between true and false
+    this.colorSelected.emit(
+      this.isEraserActive ? 'eraser' : this.selectedColor
+    ); // Emit eraser if active, else emit the selected color
   }
 
   // Whenever color changes, emit the new color value
@@ -21,6 +23,7 @@ export class ColorPickerComponent {
     this.colorSelected.emit(this.selectedColor);
   }
   colorChanged(newColor: string) {
+    this.isEraserActive = false;
     this.selectedColor = newColor;
     this.colorChange();
 

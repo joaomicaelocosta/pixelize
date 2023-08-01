@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ColorStateService } from '../color-state.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SavedDrawingsComponent } from '../saved-drawings/saved-drawings.component';
 
 @Component({
   selector: 'app-canvas',
@@ -10,6 +11,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CanvasComponent implements AfterViewInit {
   @ViewChild('myCanvas') myCanvas!: ElementRef;
+  @ViewChild('savedDrawingsComponent')
+  savedDrawingsComponent!: SavedDrawingsComponent;
 
   constructor(private colorStateService: ColorStateService) {}
 
@@ -137,6 +140,30 @@ export class CanvasComponent implements AfterViewInit {
     this.drawInitialGrid();
   }
 
+  downloadDrawing() {
+    const canvas = this.myCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+
+    // Create a temporary canvas to composite the original drawing with a white background
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    if (tempCtx === null) return;
+    // Fill the temp canvas with white background
+    tempCtx.fillStyle = 'white';
+    tempCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the original canvas onto the temp canvas
+    tempCtx.drawImage(canvas, 0, 0);
+
+    // Use the temp canvas for downloading
+    const link = document.createElement('a');
+    link.download = 'drawing.png';
+    link.href = tempCanvas.toDataURL();
+    link.click();
+  }
+
   saveDrawing() {
     let saveSlot: string | null = null;
     for (let i = 1; i <= 5; i++) {
@@ -147,9 +174,15 @@ export class CanvasComponent implements AfterViewInit {
     }
 
     if (!saveSlot) {
-      // If no empty slot, overwrite the first one (or adapt to your preference)
-      if (confirm('All save slots are occupied. Overwrite the first save?')) {
-        saveSlot = 'savedDrawing1';
+      if (confirm('All save slots are occupied. Overwrite the oldest save?')) {
+        // Shift the drawings up by one slot
+        for (let i = 1; i < 5; i++) {
+          const nextData = localStorage.getItem(`savedDrawing${i + 1}`);
+          if (nextData) {
+            localStorage.setItem(`savedDrawing${i}`, nextData);
+          }
+        }
+        saveSlot = 'savedDrawing5'; // Set the new drawing to the last slot
       } else {
         return; // Do not save if the user cancels
       }
@@ -163,17 +196,21 @@ export class CanvasComponent implements AfterViewInit {
     );
     const dataArr = Array.from(imgData.data);
     localStorage.setItem(
-      `${saveSlot}`,
+      saveSlot,
       JSON.stringify({
         data: dataArr,
         width: imgData.width,
         height: imgData.height,
       })
     );
+    this.savedDrawingsComponent.update();
   }
 
   clearSavedDrawing() {
-    localStorage.removeItem('savedDrawing');
+    for (let i = 1; i <= 5; i++) {
+      localStorage.removeItem(`savedDrawing${i}`);
+    }
+    this.savedDrawingsComponent.update();
   }
   onDrawingSelected(selectedImageData: ImageData) {
     // Load the drawing onto the main canvas

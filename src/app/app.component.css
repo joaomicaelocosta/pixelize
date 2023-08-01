@@ -1,24 +1,61 @@
 .app-container {
   font-family: "Arial", sans-serif;
   text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* This ensures no scrolling occurs because of the 100% height */
 }
 
 header {
-  background-color: #333;
-  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: #ffdb4b;
+  color: #333;
   padding: 10px 0;
+  z-index: 2;
+  height: 80px; /* You'll adjust this if it's different */
+  font-family: "Pixel", sans-serif;
 }
 
 main {
+  position: absolute;
+  top: 80px; /* the height of the header */
+  bottom: 50px; /* the height of the footer */
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 20px 0;
+  background-color: #fdeeb4;
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* just in case the content is too much, it will scroll */
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+}
+
+.container .picker {
+  position: absolute;
+  left: -130px;
+  top: 160px;
 }
 
 footer {
-  background-color: #eee;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #f8e081;
   padding: 10px 0;
-  margin-top: 20px;
+  z-index: 2;
+  height: 50px; /* You'll adjust this if it's different */
+  font-family: "Pixel", sans-serif;
+  text-align: right;
+}
+footer p {
+  margin-right: 3rem;
 }

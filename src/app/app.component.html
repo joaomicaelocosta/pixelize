@@ -1,20 +1,23 @@
 <div class="app-container">
   <header>
-    <h1>Pixelize - Personal Pixel Art Canvas</h1>
+    <h1>Pixelize</h1>
   </header>
 
   <main>
     <!-- Color Picker on the left or top, based on your design preference -->
-    <app-color-picker
-      (colorSelected)="onColorSelected($event)"
-    ></app-color-picker>
+    <div class="container">
+      <app-color-picker
+        class="picker"
+        (colorSelected)="onColorSelected($event)"
+      ></app-color-picker>
 
-    <!-- Canvas to draw the pixel art -->
-    <app-canvas></app-canvas>
+      <!-- Canvas to draw the pixel art -->
+      <app-canvas class="canvas"></app-canvas>
+    </div>
   </main>
 
   <footer>
     <!-- You can add any footer content or leave it out -->
-    <p>Created by João Costa</p>
+    <p>Created by Joao Costa</p>
   </footer>
 </div>

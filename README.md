@@ -14,7 +14,7 @@ Pixel art canvas created in Angular 16
 - Delete tool - done
 - Save drawing - done
 - Load drawing - done
-- Download drawing - todo
+- Download drawing - done
 - Style everything - todo
 
 ## Development server
